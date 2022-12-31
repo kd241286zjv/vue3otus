@@ -10,53 +10,10 @@
     </p>
     <h3>Installed CLI Plugins</h3>
     <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa"
-          target="_blank"
-          rel="noopener"
-          >pwa</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest"
-          target="_blank"
-          rel="noopener"
-          >unit-jest</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
-          target="_blank"
-          rel="noopener"
-          >typescript</a
-        >
+      <li v-for="(item, index) in fetchedData.results" :key="index">
+        <h3>name: {{ item.name }}</h3>
+        <p>population: {{ item.population }}</p>
+        <p>diameter: {{ item.diameter }}</p>
       </li>
     </ul>
     <h3>Essential Links</h3>
@@ -118,18 +75,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { defineProps, onMounted, ref } from "vue";
 
-export default defineComponent({
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
+const fetchedData = ref([]);
+const props = defineProps(["msg"]);
+
+onMounted(async () => {
+  const response = await fetch("https://swapi.dev/api/planets/");
+  fetchedData.value = await response.json();
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
