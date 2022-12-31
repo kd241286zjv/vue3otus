@@ -1,30 +1,27 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <main class="main">
+    <VHeader />
+    <VNav />
+    <div class="content">
+      <Transition name="fade">
+        <RouterView />
+      </Transition>
+    </div>
+    <footer class="footer"></footer>
+  </main>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script setup>
+import VHeader from "@/components/VHeader.vue";
+import VNav from "@/components/VNav.vue";
+</script>
 
-nav {
-  padding: 30px;
+<style lang="sass" scoped>
+.fade-enter-active,
+.fade-leave-active
+  transition: opacity 0.5s ease
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+.fade-enter-from,
+.fade-leave-to
+  opacity: 0
 </style>
